@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Greedy Birds</title>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="background.css">
+  <link rel="stylesheet" type="text/css" href="modal.css">
+  <link rel="stylesheet" type="text/css" href="ballon.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="game.js"></script>
+</head>
+<body>
+
+
+<div id="Clouds">
+  <div class="Cloud Foreground"></div>
+  <div class="Cloud Background"></div>
+  <div class="Cloud Foreground"></div>
+  <div class="Cloud Background"></div>
+  <div class="Cloud Foreground"></div>
+  <div class="Cloud Background"></div>
+  <div class="Cloud Background"></div>
+  <div class="Cloud Foreground"></div>
+  <div class="Cloud Background"></div>
+  <div class="Cloud Background"></div>
+  <!-- <svg viewBox="0 0 40 24" class="Cloud"><use xlink:href="#Cloud"></use></svg> -->
+</div>
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   width="40px" height="24px" viewBox="0 0 40 24" enable- xml:space="preserve">
+  <defs>
+    <path id="Cloud" d="M33.85,14.388c-0.176,0-0.343,0.034-0.513,0.054c0.184-0.587,0.279-1.208,0.279-1.853c0-3.463-2.809-6.271-6.272-6.271
+  c-0.38,0-0.752,0.039-1.113,0.104C24.874,2.677,21.293,0,17.083,0c-5.379,0-9.739,4.361-9.739,9.738
+  c0,0.418,0.035,0.826,0.084,1.229c-0.375-0.069-0.761-0.11-1.155-0.11C2.811,10.856,0,13.665,0,17.126
+  c0,3.467,2.811,6.275,6.272,6.275c0.214,0,27.156,0.109,27.577,0.109c2.519,0,4.56-2.043,4.56-4.562
+  C38.409,16.43,36.368,14.388,33.85,14.388z"/>
+  </defs>
+</svg>
+
+
+
+<!-- Game board -->
+<div class="game">
+
+  <table>
+    <tr>
+      <td id="00"></td><td id="01"></td><td id="02"></td><td id="03"></td><td id="04"></td><td id="05"></td>
+    </tr>
+    <tr>
+      <td id="10"></td><td id="11"></td><td id="12"></td><td id="13"></td><td id="14"></td><td id="15"></td>
+    </tr>
+    <tr>
+      <td id="20"></td><td id="21"></td><td id="22"></td><td id="23"></td><td id="24"></td><td id="25"></td>
+    </tr>
+    <tr>
+      <td id="30"></td><td id="31"></td><td id="32"></td><td id="33"></td><td id="34"></td><td id="35">
+    </tr>
+    <tr>
+      <td id="40"></td><td id="41"></td><td id="42"></td><td id="43"></td><td id="44"></td><td id="45">
+    </tr>
+    <tr>
+      <td id="50"></td><td id="51"></td><td id="52"></td><td id="53"></td><td id="54"></td><td id="55"></td>
+    </tr>
+  </table>
+
+
+  <div  class="scoreContainer">
+    <span class="playerScore" id="playerScore"></span>
+    -
+    <span class="botScore" id="botScore"></span>
+  </div>
+
+  <div class="button-container">
+  <button class="button -salmon center" onclick="newGame()">New Game</button>
+  <button class="button -flower center" onclick="showInstructions()">Help</button>
+  </div>
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close" onclick="closeInstructions()">&times;</span>
+      <p>Goal is to make number of 1s in the grid equal to required number. X : Y means required number is X and current number is Y.</p><p>When you touch a cell, its bit gets flipped and value of adjacent cells (Up, Down, Left, Right) becomes XOR of their value and previous value of current cell.</p>
+    </div>
+  </div>
+
+  <footer><a target="_blank" href="https://www.linkedin.com/in/akhileshdevrari/">Made with &hearts; by Akhilesh Devrari</a></footer>
+
+
+</div>
+
+</body>
+</html>
