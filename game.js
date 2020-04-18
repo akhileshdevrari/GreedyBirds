@@ -1,33 +1,33 @@
+var globalGame;
+var globalMode;
+
 window.onload = function () {
 	//initialize game here
+	globalMode = 1;
 	newGame();
 }
 
-
 function newGame()
 {
+	document.getElementById("gameOver").innerHTML = "";
 	//initialize game here
-	var game = new Game();
-	game.updateScreen();
+	globalGame = new Game(globalMode);
+	globalGame.updateScreen();
 }
 
 
 function engine()
 {
 	turn = -1;
-	game.print();
+	// game.print();
 }
 
-
-function finishGame()
+function changeGameMode(mode)
 {
-	console.log("Well done :)");
+	console.log("mode = "+mode);
+	globalGame.mode = mode;
+	globalMode = mode;
 }
-
-
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Modal - Showing instructions
@@ -122,61 +122,38 @@ class Board
 		}
 	}
 
-	findPossibleMoves(turn, xPlayer, yPlayer, xBot, yBot, numRows)
+	findPossibleMoves(xPlayer, yPlayer, numRows)
 	{
 		// Find possible moves
 		var possibleMoves = new Array();
-		if(turn == -1)
+		if(xPlayer > 0 && this.matrix[xPlayer-1][yPlayer]>=0)
 		{
-			if(xPlayer > 0)
-			{
-				var move = new Move(xPlayer-1, yPlayer);
-				possibleMoves.push(move);
-			}
-			if(xPlayer < numRows-1)
-			{
-				var move = new Move(xPlayer+1, yPlayer);
-				possibleMoves.push(move);
-			}
-			if(yPlayer > 0)
-			{
-				var move = new Move(xPlayer, yPlayer-1);
-				possibleMoves.push(move);
-			}
-			if(yPlayer < numRows-1)
-			{
-				var move = new Move(xPlayer, yPlayer+1);
-				possibleMoves.push(move);
-			}
+			var move = new Move(xPlayer-1, yPlayer, 38);
+			possibleMoves.push(move);
 		}
-		else
+		if(xPlayer < numRows-1 && this.matrix[xPlayer+1][yPlayer]>=0)
 		{
-			if(xBot > 0)
-			{
-				var move = new Move(xBot-1, yBot);
-				possibleMoves.push(move);
-			}
-			if(xBot < numRows-1)
-			{
-				var move = new Move(xBot+1, yBot);
-				possibleMoves.push(move);
-			}
-			if(yBot > 0)
-			{
-				var move = new Move(xBot, yBot-1);
-				possibleMoves.push(move);
-			}
-			if(yBot < numRows-1)
-			{
-				var move = new Move(xBot, yBot+1);
-				possibleMoves.push(move);
-			}
+			var move = new Move(xPlayer+1, yPlayer, 40);
+			possibleMoves.push(move);
+		}
+		if(yPlayer > 0 && this.matrix[xPlayer][yPlayer-1]>=0)
+		{
+			var move = new Move(xPlayer, yPlayer-1, 37);
+			possibleMoves.push(move);
+		}
+		if(yPlayer < numRows-1 && this.matrix[xPlayer][yPlayer+1]>=0)
+		{
+			var move = new Move(xPlayer, yPlayer+1, 39);
+			possibleMoves.push(move);
 		}
 		return possibleMoves;
 	}
 
 	highlightPossibleMoves(possibleMoves, game)
 	{
+		// Clear event listners for button press
+		// document.documentElement.removeEventListener("keyup", moveOnArrowPress);
+
 		for(var i=0; i<possibleMoves.length; i++)
 		{
 			var move = possibleMoves[i];
@@ -192,12 +169,21 @@ class Board
 			cell.appendChild(inputElement);
 		}
 	}
+
 	//Function to set on which button click, which move to make
 	setMoveOnClick(element, move, game)
 	{
 		element.addEventListener('click', function(){
 		    game.makeMove(move);
 		});
+
+		// window.addEventListener("keyup", function (event) {
+		//     event.preventDefault();
+		//     if (event.keyCode == move.keyCode) {
+		//         // game.makeMove(move);
+		//         element.click();
+		//     }
+		// });
 	}
 }
 
@@ -218,10 +204,11 @@ class Board
 
 class Move
 {
-	constructor(x, y)
+	constructor(x, y, keyCode)
 	{
 		this.x = x;
 		this.y = y;
+		this.keyCode = keyCode;
 	}
 }
 
@@ -236,12 +223,12 @@ class Move
 
 class Game
 {
-	constructor()
+	constructor(mode)
 	{
 		// console.log("play again!");
 		this.turn = -1; // Player's turn to act
-		// mode = 0 means two player, 1 means easy, 2 means medium, 3 means hard
-		this.mode = 0;
+		// mode = 0 means two player, 1 means easy, 2 means hard
+		this.mode = mode;
 		this.playerScore = 0;
 		this.botScore = 0;
 		this.numRows = 6;
@@ -260,11 +247,21 @@ class Game
 	updateScreen()
 	{
 		this.board.printBoard();
-		this.possibleMoves = this.board.findPossibleMoves(this.turn, this.xPlayer, this.yPlayer, this.xBot, this.yBot, this.numRows);
+		
+		if(this.turn == -1)
+			this.possibleMoves = this.board.findPossibleMoves(this.xPlayer, this.yPlayer, this.numRows);
+		else this.possibleMoves = this.board.findPossibleMoves(this.xBot, this.yBot, this.numRows);
+
 		this.board.highlightPossibleMoves(this.possibleMoves, this);
 		// print score
 		document.getElementById("playerScore").innerHTML = this.playerScore;
 		document.getElementById("botScore").innerHTML = this.botScore;
+
+		// Check if game is finished
+		if(this.isGameOver())
+		{
+			this.gameOver();
+		}
 	}
 
 	// Make a move in response to a click
@@ -288,6 +285,7 @@ class Game
 		// Second player/ Bot makes the move
 		else if(this.turn == -2)
 		{
+			console.log("x = "+x+"  y = "+y+"  xBot = "+this.xPlayer+"  yBot = "+this.yPlayer);
 			this.board.matrix[this.xBot][this.yBot] = 0;
 			this.botScore = this.botScore + this.board.matrix[x][y];
 			this.board.matrix[x][y] = -2;
@@ -297,5 +295,25 @@ class Game
 		}
 
 		this.updateScreen();
+	}
+
+	isGameOver()
+	{
+		var flag = true;
+		for(var i=0; i<this.numRows; i++)
+		{
+			for(var j=0; j<this.numRows; j++)
+			{
+				if(this.board.matrix[i][j] > 0)
+					flag = false;
+			}
+		}
+		return flag;
+	}
+
+	gameOver()
+	{
+		console.log("Game Over");
+		document.getElementById("gameOver").innerHTML = "GAME OVER";
 	}
 }
