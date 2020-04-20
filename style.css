@@ -9,6 +9,15 @@ body{
 	z-index: 4;
 }
 
+
+.winnerContainer table td img{
+  height: 24vw;
+  width: 24vw;
+}
+.winnerContainer table td{
+  background: none;
+}
+
 h1{
 	color: #ffffff;
 	/*font-family: monospace;*/
@@ -139,13 +148,13 @@ a:hover{
 
 /* Modal Content/Box */
 .modal-content {
-	color: teal;
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-    max-width: 400px;
+	color: #6b6b47;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 400px;
 }
 
 /* The Close Button */
@@ -161,19 +170,6 @@ a:hover{
     color: black;
     text-decoration: none;
     cursor: pointer;
-}
-
-
-/* Game over graphics */
-.gameOver{
-	z-index: 5;
-	position: fixed;
-	width: 100%;
-	text-align: center;
-	top: 20vw;
-	font-family: '14LED';
-	font-size: 60px;
-	color: teal;
 }
 
 
@@ -277,6 +273,10 @@ CSS for mobile device
 		width: 15vw;
 	    font-size: 100%;
 	}
+  .winnerContainer table td img{
+    height: 90vw;
+    width: 90vw;
+  }
 	.scoreBoard{
 		margin-top: 12vw;
 	}
@@ -290,9 +290,9 @@ CSS for mobile device
 	footer{
 		padding-top: 8vw;
 	}
-	.gameOver{
-		top: 50vw;
-	}
+	.modal-content {
+    margin: 25% auto;
+  }
 }
 
 

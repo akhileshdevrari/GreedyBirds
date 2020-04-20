@@ -1,18 +1,21 @@
 var globalGame;
 var globalMode;
 var globalEngine;
+var tableContainerContent;
 
 window.onload = function () {
 	globalMode = 1;
 	document.getElementById('easy').checked = true;
+	tableContainerContent = document.getElementById('tableContainer').innerHTML;
 	globalEngine = new Engine();
 	newGame();
 }
 
 function newGame()
 {
-	document.getElementById("gameOver").innerHTML = "";
 	//initialize game here
+	document.getElementById("winnerContainer").innerHTML = "";
+	document.getElementById('tableContainer').innerHTML = tableContainerContent;
 	globalGame = new Game(globalMode);
 	globalGame.updateScreen();
 }
@@ -20,7 +23,6 @@ function newGame()
 
 function changeGameMode(mode)
 {
-	console.log("mode = "+mode);
 	globalGame.mode = mode;
 	globalMode = mode;
 }
@@ -112,7 +114,7 @@ class Board
 				var cell = document.getElementById(i.toString()+j.toString());
 				// Filling values/numbers
 				if(this.matrix[i][j] == -1)
-					cell.innerHTML = "<img src=\"bird.jpeg\">";
+					cell.innerHTML = "<img src=\"bird.png\">";
 				else if(this.matrix[i][j] == -2)
 					cell.innerHTML = "<img src=\"pig.png\">";
 				else if(this.matrix[i][j] == 0)
@@ -254,21 +256,24 @@ class Game
 	// show board and score
 	updateScreen()
 	{
-		this.board.printBoard();
-		
-		if(this.turn == -1)
-			this.possibleMoves = this.board.findPossibleMoves(this.xPlayer, this.yPlayer, this.numRows);
-		else this.possibleMoves = this.board.findPossibleMoves(this.xBot, this.yBot, this.numRows);
-
-		this.board.highlightPossibleMoves(this.possibleMoves, this);
-		// print score
-		document.getElementById("playerScore").innerHTML = this.playerScore;
-		document.getElementById("botScore").innerHTML = this.botScore;
-
 		// Check if game is finished
 		if(this.isGameOver())
 		{
 			this.gameOver();
+		}
+		else
+		{
+			this.board.printBoard();
+			
+			if(this.turn == -1)
+				this.possibleMoves = this.board.findPossibleMoves(this.xPlayer, this.yPlayer, this.numRows);
+			else this.possibleMoves = this.board.findPossibleMoves(this.xBot, this.yBot, this.numRows);
+			
+			// print score
+			document.getElementById("playerScore").innerHTML = this.playerScore;
+			document.getElementById("botScore").innerHTML = this.botScore;
+
+			this.board.highlightPossibleMoves(this.possibleMoves, this);	
 		}
 	}
 
@@ -328,7 +333,11 @@ class Game
 
 	gameOver()
 	{
-		document.getElementById("gameOver").innerHTML = "GAME OVER";
+		document.getElementById("tableContainer").innerHTML = "";
+		if(this.playerScore > this.botScore)
+			document.getElementById("winnerContainer").innerHTML = "<table><tr><td><img src=\"birdWin.png\"></td></tr></table>";
+		else
+			document.getElementById("winnerContainer").innerHTML = "<table><tr><td><img src=\"pigWin.webp\"></td></tr></table>";
 	}
 }
 
