@@ -13,9 +13,11 @@ body{
 .winnerContainer table td img{
   height: 24vw;
   width: 24vw;
+  opacity: 1;
 }
 .winnerContainer table td{
   background: none;
+  opacity: 1;
 }
 
 table{
@@ -26,8 +28,8 @@ table{
 }
 
 td{
-    /*background-color: #FE8CDF;*/
-    background-color: #fe9ae3;
+    background-color: #FE8CDF;
+    /*background-color: #fe9ae3;*/
     height: 4vw;
     width: 4vw;
     font-size: 200%;
@@ -35,6 +37,7 @@ td{
     font-family: Helvetica;
     display: table-cell;
     margin: 0 auto;
+    opacity: 0.8;
 }
 td img{
 	height: 4vw;
