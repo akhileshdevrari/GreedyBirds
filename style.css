@@ -29,7 +29,6 @@ table{
 
 td{
     background-color: #FE8CDF;
-    /*background-color: #fe9ae3;*/
     height: 4vw;
     width: 4vw;
     font-size: 200%;
@@ -52,8 +51,7 @@ td input{
     color: white;
     font-family: Helvetica;
 	display: block;
-	/*background-color: #feb3ea;*/
-  background-color: #feb3ea;
+	background-color: #feb3ea;
 	border: none;
 }
 
