@@ -17,8 +17,7 @@ function newGame()
 	document.getElementById("winnerContainer").innerHTML = "";
 	document.getElementById('tableContainer').innerHTML = tableContainerContent;
 	globalGame = new Game(globalMode);
-	globalGame.updateScreen();
-}
+	globalGame.updateScreen();}
 
 
 function changeGameMode(mode)
