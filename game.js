@@ -255,6 +255,11 @@ class Game
 	// show board and score
 	updateScreen()
 	{
+
+		// print score
+		document.getElementById("playerScore").innerHTML = this.playerScore;
+		document.getElementById("botScore").innerHTML = this.botScore;
+
 		// Check if game is finished
 		if(this.isGameOver())
 		{
@@ -268,10 +273,6 @@ class Game
 				this.possibleMoves = this.board.findPossibleMoves(this.xPlayer, this.yPlayer, this.numRows);
 			else this.possibleMoves = this.board.findPossibleMoves(this.xBot, this.yBot, this.numRows);
 			
-			// print score
-			document.getElementById("playerScore").innerHTML = this.playerScore;
-			document.getElementById("botScore").innerHTML = this.botScore;
-
 			this.board.highlightPossibleMoves(this.possibleMoves, this);	
 		}
 	}
