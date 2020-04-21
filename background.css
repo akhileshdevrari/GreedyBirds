@@ -275,8 +275,8 @@ body {
 }
 body {
   color: #FFF;
-  /*background-color: #FD940A;*/
-  /*background-image: radial-gradient(circle, #F9A72B 0%, #FA9026 70%, #FB6C1F 100%);*/
-  background-color: #fda635;
-  background-image: radial-gradient(circle, #fda635 0%, #fba651 70%, #fb8c50 100%);
+  background-color: #FD940A;
+  background-image: radial-gradient(circle, #F9A72B 0%, #FA9026 70%, #FB6C1F 100%);
+  /*background-color: #fda635;*/
+  /*background-image: radial-gradient(circle, #fda635 0%, #fba651 70%, #fb8c50 100%);*/
 }
